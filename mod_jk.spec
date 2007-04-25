@@ -9,8 +9,8 @@
 %define build_free      1
 
 Name:           mod_jk
-Version:        1.2.19
-Release:        %mkrel 3
+Version:        1.2.22
+Release:        %mkrel 1
 Epoch:          0
 Summary:        Tomcat mod_jk connector for Apache
 #Vendor:        JPackage Project
@@ -18,9 +18,12 @@ Summary:        Tomcat mod_jk connector for Apache
 License:        Apache License
 Group:          Development/Java
 URL:            http://tomcat.apache.org/
-Source0:        http://www.apache.org/dist/tomcat/tomcat-connectors/jk/source/jk-1.2.19/tomcat-connectors-1.2.19-src.tar.gz
-Source1:        mod_jk.conf.sample
-Source2:        mod_jk-workers.properties.sample
+Source0:        http://www.apache.org/dist/tomcat/tomcat-connectors/jk/source/tomcat-connectors-%{version}-src.tar.gz
+Source1:        http://www.apache.org/dist/tomcat/tomcat-connectors/jk/source/tomcat-connectors-%{version}-src.tar.gz.asc
+Source2:        http://www.apache.org/dist/tomcat/tomcat-connectors/jk/source/tomcat-connectors-%{version}-src.tar.gz.md5
+Source3:        http://www.apache.org/dist/tomcat/tomcat-connectors/jk/source/tomcat-connectors-%{version}-src.tar.gz.sha1
+Source4:        mod_jk.conf.sample
+Source5:        mod_jk-workers.properties.sample
 Patch0:         mod_jk-no-jvm1.patch
 BuildRequires:  ant
 BuildRequires:  ant-trax
@@ -79,8 +82,8 @@ Miscellaneous mod_jk analysis and report tools.
 (cd native && %{__libtoolize} --copy --force)
 
 %{__perl} -pi -e 's|/usr/local/bin\b|%{_bindir}|' tools/reports/*.pl
-%{__cp} -a %{SOURCE1} mod_jk.conf.sample
-%{__cp} -a %{SOURCE2} workers.properties.sample
+%{__cp} -a %{SOURCE4} mod_jk.conf.sample
+%{__cp} -a %{SOURCE5} workers.properties.sample
 %{__perl} -pi -e \
   's|\@confdir\@|%{apconfdir}| ;
    s|\@logdir\@|%{aplogdir}| ;
