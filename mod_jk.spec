@@ -9,7 +9,7 @@
 %define build_free      1
 
 Name:           mod_jk
-Version:        1.2.22
+Version:        1.2.23
 Release:        %mkrel 1
 Epoch:          0
 Summary:        Tomcat mod_jk connector for Apache
@@ -42,9 +42,9 @@ Tomcat mod_jk connector for Apache.
 %package        ap13
 Summary:        Tomcat mod_jk connector for Apache 1.3.x
 Group:          Development/Java
-Obsoletes:      mod_jk
+Obsoletes:      mod_jk < %{epoch}:%{version}-%{release}
 Provides:       mod_jk = %{epoch}:%{version}-%{release}
-Obsoletes:      tomcat-mod
+Obsoletes:      tomcat-mod < %{epoch}:%{version}-%{release}
 
 %description    ap13
 Tomcat mod_jk connector for Apache 1.3.x.
@@ -53,9 +53,9 @@ Tomcat mod_jk connector for Apache 1.3.x.
 %package        ap20
 Summary:        Tomcat mod_jk connector for Apache 2.0.x
 Group:          Development/Java
-Obsoletes:      mod_jk
+Obsoletes:      mod_jk < %{epoch}:%{version}-%{release}
 Provides:       mod_jk = %{epoch}:%{version}-%{release}
-Obsoletes:      tomcat-mod
+Obsoletes:      tomcat-mod < %{epoch}:%{version}-%{release}
 
 %description    ap20
 Tomcat mod_jk connector for Apache 2.0.x.
