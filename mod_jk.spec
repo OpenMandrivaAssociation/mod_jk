@@ -9,7 +9,7 @@
 %define build_free      1
 
 Name:           mod_jk
-Version:        1.2.23
+Version:        1.2.25
 Release:        %mkrel 1
 Epoch:          0
 Summary:        Tomcat mod_jk connector for Apache
