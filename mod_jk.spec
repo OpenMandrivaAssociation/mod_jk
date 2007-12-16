@@ -10,7 +10,7 @@
 
 Name:           mod_jk
 Version:        1.2.25
-Release:        %mkrel 1
+Release:        %mkrel 2
 Epoch:          0
 Summary:        Tomcat mod_jk connector for Apache
 #Vendor:        JPackage Project
@@ -29,7 +29,7 @@ BuildRequires:  ant
 BuildRequires:  ant-trax
 BuildRequires:  apache-devel
 BuildRequires:  java-devel
-BuildRequires:  jpackage-utils >= 0:1.5.38
+BuildRequires:  java-rpmbuild >= 0:1.5.38
 BuildRequires:  libtool
 BuildRequires:  perl
 BuildRequires:  xalan-j2
