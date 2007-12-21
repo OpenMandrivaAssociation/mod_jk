@@ -33,6 +33,7 @@ BuildRequires:  java-rpmbuild >= 0:1.5.38
 BuildRequires:  libtool
 BuildRequires:  perl
 BuildRequires:  xalan-j2
+BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root
 
 %description
 Tomcat mod_jk connector for Apache.
