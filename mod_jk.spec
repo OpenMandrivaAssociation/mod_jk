@@ -9,8 +9,8 @@
 %define build_free      1
 
 Name:           mod_jk
-Version:        1.2.25
-Release:        %mkrel 2
+Version:        1.2.26
+Release:        %mkrel 0.0.1
 Epoch:          0
 Summary:        Tomcat mod_jk connector for Apache
 #Vendor:        JPackage Project
@@ -22,8 +22,9 @@ Source0:        http://www.apache.org/dist/tomcat/tomcat-connectors/jk/source/to
 Source1:        http://www.apache.org/dist/tomcat/tomcat-connectors/jk/source/tomcat-connectors-%{version}-src.tar.gz.asc
 Source2:        http://www.apache.org/dist/tomcat/tomcat-connectors/jk/source/tomcat-connectors-%{version}-src.tar.gz.md5
 Source3:        http://www.apache.org/dist/tomcat/tomcat-connectors/jk/source/tomcat-connectors-%{version}-src.tar.gz.sha1
-Source4:        mod_jk.conf.sample
-Source5:        mod_jk-workers.properties.sample
+Source4:        http://www.apache.org/dist/tomcat/tomcat-connectors/jk/source/tomcat-connectors-%{version}-src.tar.gz.sha256
+Source5:        mod_jk.conf.sample
+Source6:        mod_jk-workers.properties.sample
 Patch0:         mod_jk-no-jvm1.patch
 BuildRequires:  ant
 BuildRequires:  ant-trax
@@ -82,8 +83,8 @@ Miscellaneous mod_jk analysis and report tools.
 (cd native && %{__libtoolize} --copy --force)
 
 %{__perl} -pi -e 's|/usr/local/bin\b|%{_bindir}|' tools/reports/*.pl
-%{__cp} -a %{SOURCE4} mod_jk.conf.sample
-%{__cp} -a %{SOURCE5} workers.properties.sample
+%{__cp} -a %{SOURCE5} mod_jk.conf.sample
+%{__cp} -a %{SOURCE6} workers.properties.sample
 %{__perl} -pi -e \
   's|\@confdir\@|%{apconfdir}| ;
    s|\@logdir\@|%{aplogdir}| ;
@@ -149,14 +150,14 @@ cd xdocs ; CLASSPATH=$(%{_bindir}/build-classpath xalan-j2-serializer) %{ant} ; 
 %files ap13
 %defattr(0644,root,root,0755)
 %doc LICENSE NOTICE mod_jk.conf.sample workers.properties.sample
-%doc native/README native/CHANGES native/NEWS native/TODO
+%doc native/BUILDING.txt native/CHANGES native/NEWS native/README.txt native/STATUS.txt native/TODO.txt
 %defattr(-,root,root,-)
 %{aplibdir}/*
 %else
 %files ap20
 %defattr(0644,root,root,0755)
 %doc LICENSE NOTICE _ap20/mod_jk.conf.sample workers.properties.sample
-%doc native/README native/CHANGES native/NEWS native/TODO
+%doc native/BUILDING.txt native/CHANGES native/NEWS native/README.txt native/STATUS.txt native/TODO.txt
 %defattr(-,root,root,-)
 %{aplibdir}/*
 %endif
