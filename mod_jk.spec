@@ -10,7 +10,7 @@
 
 Name:           mod_jk
 Version:        1.2.26
-Release:        %mkrel 0.0.1
+Release:        %mkrel 0.0.2
 Epoch:          0
 Summary:        Tomcat mod_jk connector for Apache
 #Vendor:        JPackage Project
