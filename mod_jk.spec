@@ -9,8 +9,8 @@
 %define build_free      1
 
 Name:           mod_jk
-Version:        1.2.26
-Release:        %mkrel 0.0.2
+Version:        1.2.30
+Release:        %mkrel 1
 Epoch:          0
 Summary:        Tomcat mod_jk connector for Apache
 #Vendor:        JPackage Project
@@ -21,11 +21,10 @@ URL:            http://tomcat.apache.org/
 Source0:        http://www.apache.org/dist/tomcat/tomcat-connectors/jk/source/tomcat-connectors-%{version}-src.tar.gz
 Source1:        http://www.apache.org/dist/tomcat/tomcat-connectors/jk/source/tomcat-connectors-%{version}-src.tar.gz.asc
 Source2:        http://www.apache.org/dist/tomcat/tomcat-connectors/jk/source/tomcat-connectors-%{version}-src.tar.gz.md5
-Source3:        http://www.apache.org/dist/tomcat/tomcat-connectors/jk/source/tomcat-connectors-%{version}-src.tar.gz.sha1
-Source4:        http://www.apache.org/dist/tomcat/tomcat-connectors/jk/source/tomcat-connectors-%{version}-src.tar.gz.sha256
 Source5:        mod_jk.conf.sample
 Source6:        mod_jk-workers.properties.sample
 Patch0:         mod_jk-no-jvm1.patch
+Patch1:		mod_jk-aplogerror.patch
 BuildRequires:  ant
 BuildRequires:  ant-trax
 BuildRequires:  apache-devel
@@ -80,6 +79,7 @@ Miscellaneous mod_jk analysis and report tools.
 %if %{build_free}
 %patch0 -p1
 %endif
+%patch1 -p0
 (cd native && %{__libtoolize} --copy --force)
 
 %{__perl} -pi -e 's|/usr/local/bin\b|%{_bindir}|' tools/reports/*.pl
