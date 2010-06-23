@@ -4,7 +4,6 @@
 %define apconfdir       %(%{apxs} -q SYSCONFDIR 2>/dev/null)
 %define aprincludes     %(%{aprconf} --includes 2>/dev/null)
 %define aplogdir        logs
-%define tc5dir          %{_datadir}/tomcat5
 %define section         free
 %define build_free      1
 
@@ -21,8 +20,6 @@ URL:            http://tomcat.apache.org/
 Source0:        http://www.apache.org/dist/tomcat/tomcat-connectors/jk/source/tomcat-connectors-%{version}-src.tar.gz
 Source1:        http://www.apache.org/dist/tomcat/tomcat-connectors/jk/source/tomcat-connectors-%{version}-src.tar.gz.asc
 Source2:        http://www.apache.org/dist/tomcat/tomcat-connectors/jk/source/tomcat-connectors-%{version}-src.tar.gz.md5
-Source5:        mod_jk.conf.sample
-Source6:        mod_jk-workers.properties.sample
 Patch0:         mod_jk-no-jvm1.patch
 Patch1:		mod_jk-aplogerror.patch
 BuildRequires:  ant
@@ -83,16 +80,6 @@ Miscellaneous mod_jk analysis and report tools.
 (cd native && %{__libtoolize} --copy --force)
 
 %{__perl} -pi -e 's|/usr/local/bin\b|%{_bindir}|' tools/reports/*.pl
-%{__cp} -a %{SOURCE5} mod_jk.conf.sample
-%{__cp} -a %{SOURCE6} workers.properties.sample
-%{__perl} -pi -e \
-  's|\@confdir\@|%{apconfdir}| ;
-   s|\@logdir\@|%{aplogdir}| ;
-   s|\@tomcatdir\@|%{tc5dir}| ;
-   s|\@java_home\@|%{java_home}|' \
-  mod_jk.conf.sample workers.properties.sample
-%{__mkdir_p} _ap20
-%{__grep} -v ^AddModule mod_jk.conf.sample > _ap20/mod_jk.conf.sample
 %{__perl} -pi -e 's|^(APXSCPPFLAGS=.*)$|$1 %{aprincludes}|' \
   native/common/Makefile.in
 
@@ -106,8 +93,6 @@ cd native
   --enable-jni \
 %if %with apache1
   --enable-EAPI
-%else
-  --disable-EAPI
 %endif
 
 # See <http://marc.theaimsgroup.com/?l=tomcat-dev&m=105600821630990>
@@ -143,6 +128,17 @@ cd xdocs ; CLASSPATH=$(%{_bindir}/build-classpath xalan-j2-serializer) %{ant} ; 
 %{__mkdir_p} %{buildroot}%{_bindir}
 %{__install} -pm 0755 tools/reports/*.pl %{buildroot}%{_bindir}
 
+%{__install} -m644 conf/workers.properties -D %{buildroot}%{_sysconfdir}/httpd/conf/workers.properties
+%{__install} -m644 conf/httpd-jk.conf -D %{buildroot}%{_sysconfdir}/httpd/modules.d/30_mod_jk.conf
+%{__mkdir_p} %{buildroot}/var/cache/httpd/mod_jk
+touch %{buildroot}/var/cache/httpd/mod_jk/mod_jk.shm
+
+%post ap20
+service httpd condrestart
+
+%postun ap20
+service httpd condrestart
+
 %clean
 %{__rm} -rf %{buildroot}
 
@@ -156,10 +152,14 @@ cd xdocs ; CLASSPATH=$(%{_bindir}/build-classpath xalan-j2-serializer) %{ant} ; 
 %else
 %files ap20
 %defattr(0644,root,root,0755)
-%doc LICENSE NOTICE _ap20/mod_jk.conf.sample workers.properties.sample
+%doc LICENSE NOTICE conf/workers.properties.minimal
 %doc native/BUILDING.txt native/CHANGES native/NEWS native/README.txt native/STATUS.txt native/TODO.txt
 %defattr(-,root,root,-)
 %{aplibdir}/*
+%attr(0644,root,root) %config(noreplace) %{_sysconfdir}/httpd/modules.d/*_mod_jk.conf
+%attr(0644,root,root) %config(noreplace) %{_sysconfdir}/httpd/conf/workers.properties
+%attr(0700,apache,root) %dir /var/cache/httpd/mod_jk
+%attr(0600,apache,root) %ghost /var/cache/httpd/mod_jk/mod_jk.shm
 %endif
 
 %files manual
