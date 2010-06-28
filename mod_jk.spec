@@ -22,7 +22,8 @@ Source1:        http://www.apache.org/dist/tomcat/tomcat-connectors/jk/source/to
 Source2:        http://www.apache.org/dist/tomcat/tomcat-connectors/jk/source/tomcat-connectors-%{version}-src.tar.gz.md5
 Patch0:         mod_jk-no-jvm1.patch
 Patch1:		mod_jk-aplogerror.patch
-Patch2:		tomcat-connectors-1.2.30-mod_jdk.conf-use-separate-cache-dir.patch
+Patch2:		tomcat-connectors-1.2.30-mod_jk.conf-use-separate-cache-dir.patch
+Patch3:		tomcat-connectors-1.2.30-workers.properties-only-use-default-system-tomcat-node.patch
 BuildRequires:  ant
 BuildRequires:  ant-trax
 BuildRequires:  apache-devel
@@ -79,6 +80,7 @@ Miscellaneous mod_jk analysis and report tools.
 %endif
 %patch1 -p0
 %patch2 -p1 -b .cache_dir~
+%patch3 -p1 -b .multi_nodes
 (cd native && %{__libtoolize} --copy --force)
 
 %{__perl} -pi -e 's|/usr/local/bin\b|%{_bindir}|' tools/reports/*.pl
@@ -130,7 +132,7 @@ cd xdocs ; CLASSPATH=$(%{_bindir}/build-classpath xalan-j2-serializer) %{ant} ; 
 %{__mkdir_p} %{buildroot}%{_bindir}
 %{__install} -pm 0755 tools/reports/*.pl %{buildroot}%{_bindir}
 
-%{__install} -m644 conf/workers.properties.minimal -D %{buildroot}%{_sysconfdir}/httpd/conf/workers.properties
+%{__install} -m644 conf/workers.properties -D %{buildroot}%{_sysconfdir}/httpd/conf/workers.properties
 %{__install} -m644 conf/httpd-jk.conf -D %{buildroot}%{_sysconfdir}/httpd/modules.d/30_mod_jk.conf
 %{__mkdir_p} %{buildroot}/var/cache/httpd/mod_jk
 touch %{buildroot}/var/cache/httpd/mod_jk/mod_jk.shm
@@ -154,7 +156,7 @@ service httpd condrestart
 %else
 %files ap20
 %defattr(0644,root,root,0755)
-%doc LICENSE NOTICE conf/workers.properties
+%doc LICENSE NOTICE conf/workers.properties.multi_nodes conf/workers.properties.minimal
 %doc native/BUILDING.txt native/CHANGES native/NEWS native/README.txt native/STATUS.txt native/TODO.txt
 %defattr(-,root,root,-)
 %{aplibdir}/*
