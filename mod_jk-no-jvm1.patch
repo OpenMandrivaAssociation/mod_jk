@@ -1,0 +1,40 @@
+--- tomcat-connectors-1.2.19-src/native/common/jk_jni_worker.c.jvm1	2006-08-23 23:02:24.000000000 +0200
++++ tomcat-connectors-1.2.19-src/native/common/jk_jni_worker.c	2006-12-17 06:49:53.000000000 +0100
+@@ -813,6 +813,7 @@
+ 
+ static int open_jvm1(jni_worker_t * p, JNIEnv ** env, jk_logger_t *l)
+ {
++#if 0
+     JDK1_1InitArgs vm_args;
+     JNIEnv *penv;
+     int err;
+@@ -873,14 +874,18 @@
+     *env = penv;
+ 
+     JK_TRACE_EXIT(l);
+-    return JK_TRUE;
++#endif
++    JK_TRACE_ENTER(l);
++    jk_log(l, JK_LOG_EMERG, "GCJ does not support JDK1_1InitArgs");
++    JK_TRACE_EXIT(l);
++    return JK_FALSE;
+ }
+ 
+ #ifdef JNI_VERSION_1_2
+ static int detect_jvm_version(jk_logger_t *l)
+ {
+     JNIEnv *env = NULL;
+-    JDK1_1InitArgs vm_args;
++    JavaVMInitArgs vm_args;
+ 
+     JK_TRACE_ENTER(l);
+ 
+@@ -1023,7 +1028,7 @@
+ 
+     err = jni_create_java_vm(&(p->jvm), &penv, &vm_args);
+ 
+-    if (JNI_EEXIST == err) {
++    if (/*JNI_EEXIST*/(-5) == err) {
+ #ifdef AS400
+         long vmCount;
+ #else

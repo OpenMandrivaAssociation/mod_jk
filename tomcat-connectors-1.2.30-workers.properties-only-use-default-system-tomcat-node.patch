@@ -1,0 +1,29 @@
+diff -p -up tomcat-connectors-1.2.30-src/conf/workers.properties.multi_nodes tomcat-connectors-1.2.30-src/conf/workers.properties
+--- tomcat-connectors-1.2.30-src/conf/workers.properties.multi_nodes	2010-06-28 12:45:48.678807118 +0200
++++ tomcat-connectors-1.2.30-src/conf/workers.properties	2010-06-28 12:53:23.930788766 +0200
+@@ -71,7 +71,7 @@ worker.balancer.max_reply_timeouts=10
+ worker.balancer.balance_workers=node1
+ worker.node1.reference=worker.template
+ worker.node1.host=localhost
+-worker.node1.port=8109
++worker.node1.port=8009
+ # Activation allows to configure
+ # whether this node should actually be used
+ # A: active (use node fully)
+@@ -86,14 +86,14 @@ worker.node1.activation=A
+ worker.balancer.balance_workers=node2
+ worker.node2.reference=worker.template
+ worker.node2.host=localhost
+-worker.node2.port=8209
++worker.node2.port=8009
+ # Activation allows to configure
+ # whether this node should actually be used
+ # A: active (use node fully)
+ # D: disabled (only use, if sticky session needs this node)
+ # S: stopped (do not use)
+ #   Since: 1.2.19
+-worker.node2.activation=A
++worker.node2.activation=D
+ 
+ # Finally we put the parameters
+ # which should apply to all our ajp13

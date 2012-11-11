@@ -1,0 +1,12 @@
+diff -p -up tomcat-connectors-1.2.30-src/conf/httpd-jk.conf.cache_dir~ tomcat-connectors-1.2.30-src/conf/httpd-jk.conf
+--- tomcat-connectors-1.2.30-src/conf/httpd-jk.conf.cache_dir~	2010-06-23 16:36:45.791821078 +0200
++++ tomcat-connectors-1.2.30-src/conf/httpd-jk.conf	2010-06-23 16:38:16.462822555 +0200
+@@ -35,7 +35,7 @@ LoadModule jk_module modules/mod_jk.so
+     JkLogLevel info
+ 
+     # Our JK shared memory file
+-    JkShmFile logs/mod_jk.shm
++    JkShmFile /var/cache/httpd/mod_jk/mod_jk.shm
+ 
+     # Define a new log format you can use in any CustomLog in order
+     # to add mod_jk specific information to your access log.

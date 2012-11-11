@@ -1,0 +1,14 @@
+--- ./native/apache-2.0/mod_jk.c	2009-12-21 12:24:21.000000000 +0100
++++ ./native/apache-2.0/mod_jk.c.dlucio	2010-04-30 00:42:31.000000000 +0200
+@@ -642,9 +642,9 @@
+         ch++;
+     }
+ 
+-    ap_log_error(file, line, level, 0, s, res);
++    ap_log_error(file, line, level, 0, s, "%s",res);
+     if ( s ) {
+-        ap_log_error(file, line, level, 0, NULL, res);
++        ap_log_error(file, line, level,0, s, "%s", res);
+     }
+ 
+     /* Exit process */
