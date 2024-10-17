@@ -16,7 +16,7 @@ Summary:        Tomcat mod_jk connector for Apache
 #Distribution:  JPackage
 License:        Apache License
 Group:          Development/Java
-URL:            http://tomcat.apache.org/
+URL:            https://tomcat.apache.org/
 Source0:        http://www.apache.org/dist/tomcat/tomcat-connectors/jk/source/tomcat-connectors-%{version}-src.tar.gz
 Source1:        http://www.apache.org/dist/tomcat/tomcat-connectors/jk/source/tomcat-connectors-%{version}-src.tar.gz.asc
 Source2:        http://www.apache.org/dist/tomcat/tomcat-connectors/jk/source/tomcat-connectors-%{version}-src.tar.gz.md5
