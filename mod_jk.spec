@@ -24,6 +24,7 @@ Patch0:         mod_jk-no-jvm1.patch
 Patch1:		mod_jk-aplogerror.patch
 Patch2:		tomcat-connectors-1.2.30-mod_jk.conf-use-separate-cache-dir.patch
 Patch3:		tomcat-connectors-1.2.30-workers.properties-only-use-default-system-tomcat-node.patch
+BuildRequires:	make
 BuildRequires:  ant
 BuildRequires:  ant-trax
 BuildRequires:  apache-devel
